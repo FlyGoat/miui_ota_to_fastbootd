@@ -10,6 +10,18 @@ if [ $? -ne 0 ]; then echo "Not in fastbootd"; exit 1; fi
 platform-tools-linux/fastboot $* getvar product 2>&1 | grep -w "^product: *venus"
 if [ $? -ne 0 ]; then echo "Missmatching image and device"; exit 1; fi
 
+# supper will be splited
+# platform-tools-linux/fastboot $* flash super images/super.img
+platform-tools-linux/fastboot $* flash system_a images/system.img
+platform-tools-linux/fastboot $* flash system_ext_a images/system_ext.img
+platform-tools-linux/fastboot $* flash product_a images/product.img
+platform-tools-linux/fastboot $* flash vendor_a images/vendor.img
+platform-tools-linux/fastboot $* flash odm_a images/odm.img
+
+# Reboot into bootloader to flash rest raw blocks
+# fastbootd somehow can't flash modem?
+platform-tools-linux/fastboot $* reboot bootloader
+
 platform-tools-linux/fastboot $* flash vm-bootsys_a images/vm-bootsys.img
 platform-tools-linux/fastboot $* flash dsp_a images/dsp.img
 platform-tools-linux/fastboot $* flash xbl_config_a images/xbl_config.img
@@ -33,18 +45,8 @@ platform-tools-linux/fastboot $* flash hyp_a images/hyp.img
 platform-tools-linux/fastboot $* flash imagefv_a images/imagefv.img
 platform-tools-linux/fastboot $* flash shrm_a images/shrm.img
 platform-tools-linux/fastboot $* flash aop_a images/aop.img
-
 # cust doesn't exist in OTA package
 # platform-tools-linux/fastboot $* flash cust images/cust.img
-
-# supper will be splited
-# platform-tools-linux/fastboot $* flash super images/super.img
-
-platform-tools-linux/fastboot $* flash system_a images/system.img
-platform-tools-linux/fastboot $* flash system_ext_a images/system_ext.img
-platform-tools-linux/fastboot $* flash product_a images/product.img
-platform-tools-linux/fastboot $* flash vendor_a images/vendor.img
-platform-tools-linux/fastboot $* flash odm_a images/odm.img
 
 # Uncomment if you want to erase all data
 # platform-tools-linux/fastboot $* erase metadata

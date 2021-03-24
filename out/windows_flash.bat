@@ -9,6 +9,14 @@ platform-tools-windows\fastboot %* getvar is-userspace 2>&1 | findstr /r /c:"^is
 platform-tools-windows\fastboot %* getvar product 2>&1 | findstr /r /c:"^product: *venus" || echo Missmatching image and device
 platform-tools-windows\fastboot %* getvar product 2>&1 | findstr /r /c:"^product: *venus" || exit /B 1
 
+platform-tools-windows\fastboot %* flash system_a images/system.img
+platform-tools-windows\fastboot %* flash system_ext_a images/system_ext.img
+platform-tools-windows\fastboot %* flash product_a images/product.img
+platform-tools-windows\fastboot %* flash vendor_a images/vendor.img
+platform-tools-windows\fastboot %* flash odm_a images/odm.img
+
+platform-tools-windows\fastboot %* reboot bootloader
+
 platform-tools-windows\fastboot %* flash vm-bootsys_a images\vm-bootsys.img
 platform-tools-windows\fastboot %* flash dsp_a images\dsp.img
 platform-tools-windows\fastboot %* flash xbl_config_a images\xbl_config.img
@@ -32,12 +40,6 @@ platform-tools-windows\fastboot %* flash hyp_a images\hyp.img
 platform-tools-windows\fastboot %* flash imagefv_a images\imagefv.img
 platform-tools-windows\fastboot %* flash shrm_a images\shrm.img
 platform-tools-windows\fastboot %* flash aop_a images\aop.img
-
-platform-tools-windows\fastboot %* flash system_a images/system.img
-platform-tools-windows\fastboot %* flash system_ext_a images/system_ext.img
-platform-tools-windows\fastboot %* flash product_a images/product.img
-platform-tools-windows\fastboot %* flash vendor_a images/vendor.img
-platform-tools-windows\fastboot %* flash odm_a images/odm.img
 
 platform-tools-windows\fastboot %* set_active a
 platform-tools-windows\fastboot %* reboot
